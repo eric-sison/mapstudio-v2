@@ -18,6 +18,8 @@ export const useMapStudio = () => {
     const mapStudio = new MapStudio({
       target: mapRef.current,
 
+      controls: [],
+
       layers: [
         new TileLayer({
           source: new OSM(),
