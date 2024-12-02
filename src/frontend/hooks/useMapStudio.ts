@@ -6,6 +6,7 @@ import { MutableRefObject, useEffect, useRef, useState } from "react";
 import TileLayer from "ol/layer/Tile";
 import OSM from "ol/source/OSM";
 import View from "ol/View";
+import { XYZ } from "ol/source";
 
 export const useMapStudio = () => {
   const [mapManager, setMapManager] = useState<MapStudio>();
@@ -22,9 +23,11 @@ export const useMapStudio = () => {
 
       layers: [
         new TileLayer({
-          source: new OSM({
-            crossOrigin: "anonymous",
-          }),
+          source: new OSM({ crossOrigin: "anonymous" }),
+          // source: new XYZ({
+          //   url: "http://localhost:3000/api/v1/map-proxy/memomaps/{z}/{x}/{y}.png",
+          //   crossOrigin: "anonymous",
+          // }),
         }),
       ],
 
