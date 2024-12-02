@@ -22,7 +22,9 @@ export const useMapStudio = () => {
 
       layers: [
         new TileLayer({
-          source: new OSM(),
+          source: new OSM({
+            crossOrigin: "anonymous",
+          }),
         }),
       ],
 
