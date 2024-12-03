@@ -79,9 +79,12 @@ export class MapStudio {
       );
 
       // Convert to data URL and trigger callback
-      const imageData = canvas.toDataURL("image/png");
-      if (onClipEnd) {
-        onClipEnd(imageData);
+      const imageData = this.captureMap();
+
+      if (imageData) {
+        if (onClipEnd) {
+          onClipEnd(imageData);
+        }
       }
     });
 

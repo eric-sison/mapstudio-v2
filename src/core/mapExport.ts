@@ -8,12 +8,12 @@ export class MapExport {
     this.map = map;
   }
 
-  capture() {
+  public capture() {
     const canvas = this.getMapCanvas();
     return canvas?.toDataURL("image/png");
   }
 
-  download(mapFile: MapFile, imageData: string | undefined) {
+  public download(mapFile: MapFile, imageData: string | undefined) {
     const canvas = this.getMapCanvas();
     if (!canvas) return;
 

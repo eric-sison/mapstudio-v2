@@ -23,11 +23,7 @@ export const useMapStudio = () => {
 
       layers: [
         new TileLayer({
-          source: new OSM({ crossOrigin: "anonymous" }),
-          // source: new XYZ({
-          //   url: "http://localhost:3000/api/v1/map-proxy/memomaps/{z}/{x}/{y}.png",
-          //   crossOrigin: "anonymous",
-          // }),
+          source: new OSM(),
         }),
       ],
 

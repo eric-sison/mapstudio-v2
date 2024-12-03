@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 
-export const mapProxyHandler = new Hono().get("/memomaps/:z/:x/:y", async (c) => {
+export const mapProxyHandler = new Hono().get("/:z/:x/:y", async (c) => {
   const z = c.req.param("z");
   const x = c.req.param("x");
   const y = c.req.param("y");

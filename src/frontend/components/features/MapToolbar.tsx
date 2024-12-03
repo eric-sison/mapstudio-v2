@@ -1,7 +1,18 @@
 "use client";
 
 import * as Toolbar from "@radix-ui/react-toolbar";
-import { CircleDot, MapPin, PencilLine, Pentagon, Printer, Ruler, Waypoints } from "lucide-react";
+import {
+  CircleDot,
+  Grid,
+  MapPin,
+  PencilLine,
+  Pentagon,
+  Printer,
+  Ruler,
+  Scissors,
+  Waypoints,
+  Wrench,
+} from "lucide-react";
 import { useState, type FunctionComponent } from "react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/Tooltip";
 import { MapStudio } from "@mapstudio/core/mapstudio";
@@ -9,6 +20,7 @@ import { DrawType } from "@mapstudio/core/types/map";
 
 export const MapToolbar: FunctionComponent<{ mapStudio: MapStudio | undefined }> = ({ mapStudio }) => {
   const [activeDrawType, setActiveDrawType] = useState<DrawType | null>(null);
+  const [isClipMode, setIsClipMode] = useState(false);
 
   const print = () => {
     if (mapStudio) {
@@ -33,10 +45,37 @@ export const MapToolbar: FunctionComponent<{ mapStudio: MapStudio | undefined }>
     }
   };
 
+  const handleClipMode = () => {
+    if (!mapStudio) return;
+
+    if (!isClipMode) {
+      mapStudio.startClipMode((imageData) => {
+        mapStudio.downloadMap({ filename: "clip", format: "png" }, imageData);
+
+        // Exit clip mode after download
+        setIsClipMode(false);
+        mapStudio.stopClipMode();
+      });
+      setIsClipMode(true);
+    } else {
+      mapStudio.stopClipMode();
+      setIsClipMode(false);
+    }
+  };
+
   return (
     <div className="right-5">
       <Toolbar.Root className="absolute left-2 top-2 z-10 flex items-center gap-5 rounded-full bg-neutral-900 px-4 py-3 text-white shadow-md">
         <Toolbar.ToggleGroup type="single" className="flex items-center gap-4">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Grid className="h-5 w-5" />
+              </TooltipTrigger>
+              <TooltipContent>Snap to Grid</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger onClick={() => handleDraw("Point")}>
@@ -66,7 +105,7 @@ export const MapToolbar: FunctionComponent<{ mapStudio: MapStudio | undefined }>
 
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger onClick={() => handleDraw("Polygon")}>
+              <TooltipTrigger onClick={() => handleDraw("Box")}>
                 <Pentagon className="h-5 w-5" />
               </TooltipTrigger>
               <TooltipContent>Polygon</TooltipContent>
@@ -93,6 +132,29 @@ export const MapToolbar: FunctionComponent<{ mapStudio: MapStudio | undefined }>
               <Printer className="h-5 w-5" />
             </TooltipTrigger>
             <TooltipContent>Line</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger onClick={() => handleClipMode()}>
+              <Scissors className="h-5 w-5" />
+            </TooltipTrigger>
+            <TooltipContent>Line</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger
+              onClick={() => {
+                const features = mapStudio?.getDrawFeatures();
+                console.log({ features });
+              }}
+            >
+              <Wrench className="h-5 w-5" />
+            </TooltipTrigger>
+            <TooltipContent>Debug</TooltipContent>
           </Tooltip>
         </TooltipProvider>
       </Toolbar.Root>

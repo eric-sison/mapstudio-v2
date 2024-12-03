@@ -5,7 +5,15 @@ export type LayerEntry = {
   layer: Layer;
 };
 
-export type DrawType = "Point" | "LineString" | "Polygon" | "Circle" | "FreehandLine" | "FreehandPolygon";
+export type DrawType =
+  | "Point"
+  | "LineString"
+  | "Polygon"
+  | "Circle"
+  | "Box"
+  | "Rectangle"
+  | "FreehandLineString"
+  | "FreehandPolygon";
 
 export type MapFile = {
   filename: string;
