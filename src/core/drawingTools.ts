@@ -1,10 +1,10 @@
 import { Map } from "ol";
 import { Draw, Modify, Snap } from "ol/interaction";
-import VectorLayer from "ol/layer/Vector";
-import VectorSource from "ol/source/Vector";
 import { Circle, Fill, Stroke, Style } from "ol/style";
 import { DrawType } from "./types/map";
 import { createBox, createRegularPolygon } from "ol/interaction/Draw";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
 
 export class DrawingTools {
   private map: Map;
@@ -28,38 +28,43 @@ export class DrawingTools {
     };
 
     switch (type) {
-      case "FreehandLineString":
+      case "FreehandLineString": {
         drawOptions = {
           type: "LineString",
           freehand: true,
         };
         break;
+      }
 
-      case "FreehandPolygon":
+      case "FreehandPolygon": {
         drawOptions = {
           type: "Polygon",
           freehand: true,
         };
         break;
+      }
 
-      case "Box":
+      case "Box": {
         drawOptions = {
           type: "Circle",
           geometryFunction: createRegularPolygon(4),
         };
         break;
+      }
 
-      case "Rectangle":
+      case "Rectangle": {
         drawOptions = {
           type: "Polygon",
           geometryFunction: createBox(),
         };
         break;
+      }
 
-      default:
+      default: {
         drawOptions = {
           type: type,
         };
+      }
     }
 
     this.drawInteraction = new Draw({

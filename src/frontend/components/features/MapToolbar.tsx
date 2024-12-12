@@ -8,7 +8,6 @@ import {
   PencilLine,
   Pentagon,
   Printer,
-  Ruler,
   Scissors,
   Waypoints,
   Wrench,

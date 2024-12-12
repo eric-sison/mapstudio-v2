@@ -2,7 +2,7 @@
 
 import { MapStudio } from "@mapstudio/core/mapstudio";
 import { defaults as defaultInteractions } from "ol/interaction";
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import TileLayer from "ol/layer/Tile";
 import OSM from "ol/source/OSM";
 import View from "ol/View";
@@ -11,7 +11,7 @@ import { XYZ } from "ol/source";
 export const useMapStudio = () => {
   const [mapManager, setMapManager] = useState<MapStudio>();
 
-  const mapRef = useRef<HTMLDivElement>(null) as MutableRefObject<HTMLDivElement | null>;
+  const mapRef = useRef<HTMLDivElement>(null) as RefObject<HTMLDivElement | null>;
 
   useEffect(() => {
     if (!mapRef.current) return;
